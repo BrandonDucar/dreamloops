@@ -1,0 +1,19 @@
+{
+  "name": "@dreamloops/warper-keeper",
+  "version": "0.1.0",
+  "type": "module",
+  "main": "./src/index.js",
+  "files": ["src", "README.md"],
+  "repository": { "type": "git", "url": "https://github.com/BrandonDucar/dreamloops.git", "directory": "packages/warper-keeper" },
+  "exports": {
+    ".": "./src/index.js",
+    "./contracts/v1": "./src/contracts/v1.js"
+  },
+  "scripts": {
+    "test": "node --test tests/*.test.js"
+  },
+  "engines": {
+    "node": ">=20.19.0"
+  },
+  "license": "Apache-2.0"
+}

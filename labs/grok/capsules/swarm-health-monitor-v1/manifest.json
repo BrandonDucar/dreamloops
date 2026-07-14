@@ -1,0 +1,32 @@
+{
+  "schema": "dreamnet.synergy_capsule.v1",
+  "capsule_id": "capsule:swarm-health-monitor-v1",
+  "name": "Swarm Health Monitor v1",
+  "version": "v1.0.0",
+  "capsule_type": "workflow",
+  "status": "draft",
+  "created_at": "2026-06-23T00:00:00.000Z",
+  "purpose": "Carry a proposed health-observation and early-warning recipe without claiming a connected telemetry runtime.",
+  "source": {
+    "created_by": "Grok-pigooseclaw innovation lane",
+    "derived_from": ["contract:swarm-telemetry"],
+    "learning_receipts": []
+  },
+  "target": {"eligible_cells": ["capsule-reviewers"], "excluded_cells": [], "required_badges": []},
+  "payload": {
+    "kind": "workflow_recipe",
+    "instructions": ["Review freshness, unknown-state, anomaly, and receipt rules before connecting any telemetry source."],
+    "memory_policy": {"allowed": ["verified_health_refs"], "forbidden": ["secrets", "raw_private_user_data"], "ttl_days": 90},
+    "success_metrics": ["No component is reported healthy without a fresh probe and reproducible receipt."]
+  },
+  "constraints": {"max_actions_per_user_per_day": 0, "public_send": "false", "private_data_access": false, "requires_aegis_scan": true, "requires_quarantine_on_violation": true},
+  "blocked": ["secrets", "raw_private_user_data", "cloud_mutation_authority", "public_posting_authority"],
+  "receipts": {"required": true, "types": ["verification", "rollback"]},
+  "adoption": {"mode": "manual_review", "pilot_window_hours": 24, "rollback_strategy": "disable_capsule"},
+  "safety": {"dreamthrax_lane": "none", "shield_integrity_minimum": 1, "quarantine_triggers": ["stale_health_claim", "missing_probe_receipt", "content_hash_mismatch"]},
+  "provenance": {
+    "repo_paths": ["capsules/swarm-health-monitor-v1/capsule.md"],
+    "content_hash": "sha256:d8cd288879fd043d9a0b68f3ac01c9589359e0759bfbb6fc15240408a84f3171",
+    "reviewers": ["Codex knowledge-maintainer"]
+  }
+}

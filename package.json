@@ -1,0 +1,18 @@
+{
+  "name": "dreamloops-monorepo",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Portable operating loops and capability Capsules for persistent AI agents",
+  "type": "module",
+  "workspaces": ["packages/*"],
+  "scripts": {
+    "generate": "node scripts/generate-starter-kit.mjs && node scripts/generate-catalog.mjs",
+    "generate:check": "node scripts/generate-starter-kit.mjs --check && node scripts/generate-catalog.mjs --check",
+    "check": "node scripts/check-syntax.mjs && node packages/cli/src/cli.js validate-all",
+    "test": "npm run test --workspaces --if-present",
+    "secret-scan": "node scripts/secret-scan.mjs",
+    "verify": "npm run generate:check && npm run check && npm test && npm run secret-scan"
+  },
+  "engines": { "node": ">=18.17.0" },
+  "license": "Apache-2.0"
+}

@@ -1,0 +1,13 @@
+{
+  "name": "@dreamloops/cli",
+  "version": "0.1.0",
+  "type": "module",
+  "description": "CLI for initializing, validating, sealing, listing, and dry-running DreamLoops",
+  "bin": { "dreamloops": "./src/cli.js" },
+  "files": ["src", "templates", "README.md"],
+  "repository": { "type": "git", "url": "https://github.com/BrandonDucar/dreamloops.git", "directory": "packages/cli" },
+  "dependencies": { "@dreamloops/runtime": "0.1.0" },
+  "scripts": { "test": "node --test tests/*.test.js" },
+  "engines": { "node": ">=18.17.0" },
+  "license": "Apache-2.0"
+}

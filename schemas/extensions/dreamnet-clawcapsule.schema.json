@@ -1,0 +1,196 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://dreamnet.ink/schemas/dreamnet-clawcapsule.schema.json",
+  "title": "DreamNet ClawCapsule",
+  "description": "Governed unit of agent work: identity, runtime, MCP surface, permissions, memory scope, health, rollback, and receipt requirements.",
+  "type": "object",
+  "required": [
+    "schema",
+    "claw",
+    "surface",
+    "runtime",
+    "mcp",
+    "permissions",
+    "memory",
+    "receipts",
+    "health",
+    "rollback"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "schema": {
+      "const": "dreamnet.clawcapsule.v1"
+    },
+    "dreamloop_ref": {
+      "type": "string",
+      "description": "Optional repository path or canonical identifier for the DreamLoop mission contract governing this capsule run.",
+      "examples": ["docs/dreamloops/kubeclaw-clawcapsule-scheduler.dreamloop.md"]
+    },
+    "claw": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]{1,127}$"
+    },
+    "surface": {
+      "type": "string",
+      "minLength": 1,
+      "examples": ["gmail", "github", "docker", "clawdchat", "nostr", "farcaster"]
+    },
+    "runtime": {
+      "type": "object",
+      "required": ["kind"],
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": ["docker", "process", "worker", "cloudflare-worker", "railway", "nuc", "external"]
+        },
+        "image": {
+          "type": "string"
+        },
+        "image_digest": {
+          "type": "string",
+          "pattern": "^sha256:[a-fA-F0-9]{64}$"
+        },
+        "command": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "mcp": {
+      "type": "object",
+      "required": ["server", "endpoint"],
+      "additionalProperties": false,
+      "properties": {
+        "server": {
+          "type": "string",
+          "minLength": 1
+        },
+        "endpoint": {
+          "type": "string",
+          "minLength": 1
+        },
+        "tools": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        }
+      }
+    },
+    "permissions": {
+      "type": "object",
+      "required": ["read", "write", "public_send", "destructive"],
+      "additionalProperties": false,
+      "properties": {
+        "read": {
+          "type": "boolean"
+        },
+        "write": {
+          "type": "string",
+          "enum": ["false", "draft_only", "charter_bound", "human_approval_required", "quorum_approval_required"]
+        },
+        "public_send": {
+          "type": "string",
+          "enum": ["false", "charter_bound", "human_approval_required", "quorum_approval_required"]
+        },
+        "destructive": {
+          "const": "human_approval_required"
+        },
+        "expires_at": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "memory": {
+      "type": "object",
+      "required": ["scope", "persistent", "store"],
+      "additionalProperties": false,
+      "properties": {
+        "scope": {
+          "type": "string",
+          "enum": ["none", "agent", "user", "workspace", "guild", "public"]
+        },
+        "persistent": {
+          "type": "boolean"
+        },
+        "store": {
+          "type": "string",
+          "enum": ["none", "filesystem", "redis", "postgres", "pgvector", "nats-jetstream", "obsidian", "pieces", "external"]
+        }
+      }
+    },
+    "receipts": {
+      "type": "object",
+      "required": ["required", "types"],
+      "additionalProperties": false,
+      "properties": {
+        "required": {
+          "type": "boolean"
+        },
+        "types": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": ["observation", "learning", "intent", "execution", "verification", "social", "release-evidence", "rollback"]
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        }
+      }
+    },
+    "health": {
+      "type": "object",
+      "required": ["heartbeat_seconds", "signals"],
+      "additionalProperties": false,
+      "properties": {
+        "heartbeat_seconds": {
+          "type": "integer",
+          "minimum": 5,
+          "maximum": 3600
+        },
+        "signals": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": ["http", "process", "docker-health", "docker-top", "queue-lag", "receipt-freshness", "model-runner-status"]
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        }
+      }
+    },
+    "rollback": {
+      "type": "object",
+      "required": ["strategy"],
+      "additionalProperties": false,
+      "properties": {
+        "strategy": {
+          "type": "string",
+          "enum": ["none", "delete-draft", "pause-worker", "revert-config", "rollback-release", "human-runbook"]
+        },
+        "runbook": {
+          "type": "string"
+        }
+      }
+    },
+    "university": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "required_badges": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        }
+      }
+    }
+  }
+}

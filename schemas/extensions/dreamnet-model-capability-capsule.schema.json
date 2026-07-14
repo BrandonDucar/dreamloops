@@ -1,0 +1,173 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://dreamnet.ink/schemas/dreamnet-model-capability-capsule.schema.json",
+  "title": "DreamNet Model Capability Capsule",
+  "description": "A bounded model-routing capability packet for assigning LLMs to DreamNet work without granting autonomous authority.",
+  "type": "object",
+  "required": [
+    "schema",
+    "capsule_id",
+    "name",
+    "status",
+    "provider",
+    "model_id",
+    "roles",
+    "best_for",
+    "avoid_for",
+    "routing",
+    "budget",
+    "safety",
+    "receipts"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "schema": {
+      "const": "dreamnet.model_capability_capsule.v1"
+    },
+    "capsule_id": {
+      "type": "string",
+      "pattern": "^model-capsule:[a-z0-9][a-z0-9_.:-]{2,127}$"
+    },
+    "name": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 140
+    },
+    "status": {
+      "type": "string",
+      "enum": ["active", "pilot", "watchlist", "blocked", "retired"]
+    },
+    "provider": {
+      "type": "string",
+      "enum": ["codex", "openrouter", "nvidia-nim", "sakana-fugu", "ollama-local", "direct-api", "unknown"]
+    },
+    "model_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 180
+    },
+    "roles": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 2,
+        "maxLength": 80
+      },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "best_for": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 2,
+        "maxLength": 160
+      },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "avoid_for": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 2,
+        "maxLength": 160
+      },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "routing": {
+      "type": "object",
+      "required": ["priority", "task_tags", "fallback_order"],
+      "additionalProperties": false,
+      "properties": {
+        "priority": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "task_tags": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 2,
+            "maxLength": 80
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "fallback_order": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 180
+          },
+          "uniqueItems": true
+        }
+      }
+    },
+    "budget": {
+      "type": "object",
+      "required": ["max_calls_per_run", "max_output_tokens", "requires_operator_for_paid_burst"],
+      "additionalProperties": false,
+      "properties": {
+        "max_calls_per_run": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 3
+        },
+        "max_output_tokens": {
+          "type": "integer",
+          "minimum": 32,
+          "maximum": 4096
+        },
+        "requires_operator_for_paid_burst": {
+          "const": true
+        }
+      }
+    },
+    "safety": {
+      "type": "object",
+      "required": ["secrets_allowed", "public_actions_allowed", "wallet_actions_allowed", "requires_verifier"],
+      "additionalProperties": false,
+      "properties": {
+        "secrets_allowed": {
+          "const": false
+        },
+        "public_actions_allowed": {
+          "const": false
+        },
+        "wallet_actions_allowed": {
+          "const": false
+        },
+        "requires_verifier": {
+          "const": true
+        }
+      }
+    },
+    "receipts": {
+      "type": "object",
+      "required": ["required", "types"],
+      "additionalProperties": false,
+      "properties": {
+        "required": {
+          "const": true
+        },
+        "types": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": ["availability", "bounded_run", "model_bakeoff", "verifier_review", "memory_promotion"]
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        }
+      }
+    },
+    "notes": {
+      "type": "string",
+      "maxLength": 800
+    }
+  }
+}

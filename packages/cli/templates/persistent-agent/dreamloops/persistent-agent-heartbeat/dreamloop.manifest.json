@@ -1,0 +1,107 @@
+{
+  "schema": "dreamnet.dreamloop.v1",
+  "loop_id": "persistent-agent-heartbeat-v1",
+  "title": "Persistent Agent Heartbeat",
+  "version": "1.0.0",
+  "status": "rehearsed",
+  "owner": "persistent-agent-base-v1",
+  "stewards": [
+    "agent_operator"
+  ],
+  "permission_tier": "local_draft_write",
+  "trigger": "scheduled health pulse",
+  "inputs": [
+    "agent identity",
+    "current objective",
+    "current time",
+    "operator policy"
+  ],
+  "context_sources": [
+    "runtime",
+    "state store",
+    "scheduler",
+    "budget"
+  ],
+  "allowed_actions": [
+    "receipt.local.write",
+    "runtime.health.read",
+    "state.local.write"
+  ],
+  "blocked_actions": [
+    "cloud.mutate",
+    "component.install",
+    "connector.unbounded.write",
+    "deployment.production.write",
+    "package.install",
+    "public.publish",
+    "secret.value.read",
+    "self.modify.live",
+    "signer.change",
+    "wallet.sign"
+  ],
+  "checks": [
+    "permissions granted",
+    "resource ceilings intact",
+    "receipt produced"
+  ],
+  "evidence_outputs": [
+    "persistent-agent-heartbeat evidence"
+  ],
+  "receipt_outputs": [
+    "persistent-agent-heartbeat receipt"
+  ],
+  "knowledge_state_outputs": [
+    "persistent-agent-heartbeat knowledge-state update"
+  ],
+  "execution_trace_outputs": [
+    "persistent-agent-heartbeat bounded execution trace"
+  ],
+  "memory_routes": [
+    "local episodic memory",
+    "promote only verified durable facts"
+  ],
+  "cooldown": "host policy",
+  "failure_modes": [
+    "permission denied",
+    "unregistered handler",
+    "timeout",
+    "invalid state",
+    "dependency unavailable"
+  ],
+  "promotion_path": "rehearsed -> active_local -> live_guarded",
+  "last_reviewed": "2026-07-14",
+  "limits": {
+    "max_wall_time_ms": 120000,
+    "max_steps": 6,
+    "max_retries_per_step": 1
+  },
+  "steps": [
+    {
+      "id": "inspect-runtime",
+      "handler": "runtime.health.read",
+      "permission": "runtime.health.read",
+      "with": {},
+      "retry": {
+        "max_attempts": 2
+      }
+    },
+    {
+      "id": "write-state",
+      "handler": "state.local.write",
+      "permission": "state.local.write",
+      "with": {},
+      "retry": {
+        "max_attempts": 2
+      }
+    },
+    {
+      "id": "write-receipt",
+      "handler": "receipt.local.write",
+      "permission": "receipt.local.write",
+      "with": {},
+      "retry": {
+        "max_attempts": 2
+      }
+    }
+  ]
+}

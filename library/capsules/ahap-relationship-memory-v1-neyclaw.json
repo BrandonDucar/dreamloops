@@ -1,0 +1,138 @@
+{
+  "schema": "dreamnet.synergy_capsule.v1",
+  "capsule_id": "capsule:ahap.relationship-memory.v1.neyclaw",
+  "name": "AHAP Relationship Memory for Neyclaw",
+  "version": "v1.0.0",
+  "capsule_type": "ahap",
+  "status": "draft",
+  "created_at": "2026-06-30T20:10:00Z",
+  "purpose": "Help neyclaw-dreamnet build durable Farcaster relationships by using Ghostmintops as a graph and taste template without copying Ghostmintops identity or voice.",
+  "source": {
+    "created_by": "Codex",
+    "derived_from": [
+      "docs/agent-university/courses/AHAP-101.md",
+      "docs/architecture/shielded-cells-synergy-capsules.md",
+      "artifacts/ops/social-autonomy/social-ramp-shielded-cells-receipt-2026-06-30T19-45Z.md"
+    ],
+    "learning_receipts": [
+      "artifacts/ops/social-autonomy/social-ramp-shielded-cells-receipt-2026-06-30T19-45Z.md"
+    ]
+  },
+  "target": {
+    "eligible_cells": [
+      "neyclaw-dreamnet"
+    ],
+    "excluded_cells": [
+      "jaggy"
+    ],
+    "required_badges": [
+      "AHAP-101"
+    ]
+  },
+  "payload": {
+    "kind": "playbook",
+    "instructions": [
+      "Use Ghostmintops as a graph and taste template, not as an identity to imitate.",
+      "Prioritize builders, mini app makers, ZABAL/POIDH participants, Neynar/Base ecosystem accounts, and people who already interact with Ghostmintops.",
+      "Listen before acting: prefer reading recent casts and choosing one specific action over broad engagement.",
+      "Use one action per target user per day unless a future charter explicitly raises the cap.",
+      "Prefer follows and likes while Neyclaw warms up; use replies only when the reply adds specific context or help.",
+      "Record no-action decisions when silence is more socially appropriate than engagement.",
+      "Route repeated awkwardness, spam-like behavior, or signer errors to GhostGooseOps and Hermes for review."
+    ],
+    "memory_policy": {
+      "allowed": [
+        "public handle",
+        "public topics",
+        "public interaction outcome",
+        "relationship tags",
+        "reply quality notes",
+        "reciprocity signals"
+      ],
+      "forbidden": [
+        "private messages",
+        "private contact details",
+        "secret values",
+        "wallet custody data",
+        "raw signer internals",
+        "non-public personal data"
+      ],
+      "ttl_days": 90
+    },
+    "success_metrics": [
+      "non-template interactions",
+      "healthy follows",
+      "replies with specific value",
+      "reciprocal engagement",
+      "no spam reports",
+      "no signer errors",
+      "social learning receipts written"
+    ]
+  },
+  "constraints": {
+    "max_actions_per_user_per_day": 1,
+    "public_send": "charter_bound",
+    "private_data_access": false,
+    "requires_aegis_scan": true,
+    "requires_quarantine_on_violation": true
+  },
+  "blocked": [
+    "secrets",
+    "raw_private_user_data",
+    "malware",
+    "destructive_commands",
+    "signer_authority",
+    "wallet_authority",
+    "cloud_mutation_authority",
+    "public_posting_authority",
+    "private_scraping",
+    "deceptive_impersonation",
+    "bulk_engagement",
+    "token_hype",
+    "dm_outreach"
+  ],
+  "receipts": {
+    "required": true,
+    "types": [
+      "learning",
+      "adoption",
+      "social_action",
+      "social_learning",
+      "no_action_decision",
+      "quarantine",
+      "verification"
+    ]
+  },
+  "adoption": {
+    "mode": "kubeclaw_pilot",
+    "pilot_window_hours": 72,
+    "rollback_strategy": "pause_worker"
+  },
+  "safety": {
+    "dreamthrax_lane": "quarantine_ready",
+    "shield_integrity_minimum": 0.9,
+    "quarantine_triggers": [
+      "unauthorized_external_action_attempt",
+      "repeated_failed_verification",
+      "signer_error",
+      "social_safety_violation",
+      "repetitive_template_engagement",
+      "private_data_boundary_failure",
+      "bulk_engagement_detected"
+    ]
+  },
+  "provenance": {
+    "repo_paths": [
+      "schemas/dreamnet-synergy-capsule.schema.json",
+      "docs/architecture/shielded-cells-synergy-capsules.md",
+      "docs/agent-university/courses/ahap-relationship-memory-capsule.md",
+      "artifacts/ops/social-autonomy/capsules/ahap-relationship-memory-v1-neyclaw.json"
+    ],
+    "content_hash": "sha256:1aaa00280e3edec62b344c2e53797299cd1052a0cb8986b9938238e6fcdd9833",
+    "reviewers": [
+      "Aegis",
+      "GhostGooseOps",
+      "Hermes"
+    ]
+  }
+}

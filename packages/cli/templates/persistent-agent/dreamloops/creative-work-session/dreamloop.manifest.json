@@ -1,0 +1,127 @@
+{
+  "schema": "dreamnet.dreamloop.v1",
+  "loop_id": "creative-work-session-v1",
+  "title": "Creative Work Session",
+  "version": "1.0.0",
+  "status": "rehearsed",
+  "owner": "persistent-agent-base-v1",
+  "stewards": [
+    "agent_operator"
+  ],
+  "permission_tier": "local_draft_write",
+  "trigger": "creative brief or scheduled practice",
+  "inputs": [
+    "agent identity",
+    "current objective",
+    "current time",
+    "operator policy"
+  ],
+  "context_sources": [
+    "brief",
+    "prior versions",
+    "references",
+    "attribution policy"
+  ],
+  "allowed_actions": [
+    "artifact.local.write",
+    "creative.draft",
+    "creative.review",
+    "project.read",
+    "project.write"
+  ],
+  "blocked_actions": [
+    "cloud.mutate",
+    "component.install",
+    "connector.unbounded.write",
+    "deployment.production.write",
+    "package.install",
+    "public.publish",
+    "secret.value.read",
+    "self.modify.live",
+    "signer.change",
+    "wallet.sign"
+  ],
+  "checks": [
+    "permissions granted",
+    "resource ceilings intact",
+    "receipt produced"
+  ],
+  "evidence_outputs": [
+    "creative-work-session evidence"
+  ],
+  "receipt_outputs": [
+    "creative-work-session receipt"
+  ],
+  "knowledge_state_outputs": [
+    "creative-work-session knowledge-state update"
+  ],
+  "execution_trace_outputs": [
+    "creative-work-session bounded execution trace"
+  ],
+  "memory_routes": [
+    "local episodic memory",
+    "promote only verified durable facts"
+  ],
+  "cooldown": "host policy",
+  "failure_modes": [
+    "permission denied",
+    "unregistered handler",
+    "timeout",
+    "invalid state",
+    "dependency unavailable"
+  ],
+  "promotion_path": "rehearsed -> active_local -> live_guarded",
+  "last_reviewed": "2026-07-14",
+  "limits": {
+    "max_wall_time_ms": 120000,
+    "max_steps": 7,
+    "max_retries_per_step": 1
+  },
+  "steps": [
+    {
+      "id": "load-project",
+      "handler": "project.read",
+      "permission": "project.read",
+      "with": {},
+      "retry": {
+        "max_attempts": 2
+      }
+    },
+    {
+      "id": "draft",
+      "handler": "creative.draft",
+      "permission": "creative.draft",
+      "with": {},
+      "retry": {
+        "max_attempts": 2
+      }
+    },
+    {
+      "id": "review",
+      "handler": "creative.review",
+      "permission": "creative.review",
+      "with": {},
+      "retry": {
+        "max_attempts": 2
+      }
+    },
+    {
+      "id": "write-artifact",
+      "handler": "artifact.local.write",
+      "permission": "artifact.local.write",
+      "with": {},
+      "retry": {
+        "max_attempts": 2
+      }
+    },
+    {
+      "id": "checkpoint",
+      "handler": "project.write",
+      "permission": "project.write",
+      "with": {},
+      "retry": {
+        "max_attempts": 2
+      }
+    }
+  ]
+}

@@ -1,0 +1,335 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://dreamnet.ink/schemas/dreamnet-synergy-capsule.schema.json",
+  "title": "DreamNet Synergy Capsule",
+  "description": "Signed, receipt-backed capability packet for safe capability diffusion across Shielded Cells.",
+  "type": "object",
+  "required": [
+    "schema",
+    "capsule_id",
+    "name",
+    "version",
+    "capsule_type",
+    "status",
+    "created_at",
+    "purpose",
+    "source",
+    "target",
+    "payload",
+    "constraints",
+    "blocked",
+    "receipts",
+    "adoption",
+    "safety",
+    "provenance"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "schema": {
+      "const": "dreamnet.synergy_capsule.v1"
+    },
+    "capsule_id": {
+      "type": "string",
+      "pattern": "^capsule:[a-z0-9][a-z0-9_.:-]{2,127}$"
+    },
+    "name": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 140
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^v[0-9]+(\\.[0-9]+){0,2}$"
+    },
+    "capsule_type": {
+      "type": "string",
+      "enum": [
+        "ahap",
+        "safety",
+        "toolgym",
+        "university",
+        "model-router",
+        "workflow",
+        "ui-ux",
+        "memory",
+        "release-evidence"
+      ]
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "aegis_review",
+        "university_review",
+        "approved_for_pilot",
+        "active",
+        "quarantined",
+        "retired"
+      ]
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "purpose": {
+      "type": "string",
+      "minLength": 10,
+      "maxLength": 600
+    },
+    "source": {
+      "type": "object",
+      "required": ["created_by", "derived_from", "learning_receipts"],
+      "additionalProperties": false,
+      "properties": {
+        "created_by": {
+          "type": "string",
+          "minLength": 1
+        },
+        "derived_from": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "learning_receipts": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        }
+      }
+    },
+    "target": {
+      "type": "object",
+      "required": ["eligible_cells", "excluded_cells", "required_badges"],
+      "additionalProperties": false,
+      "properties": {
+        "eligible_cells": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "excluded_cells": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        },
+        "required_badges": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        }
+      }
+    },
+    "payload": {
+      "type": "object",
+      "required": ["kind", "instructions", "memory_policy", "success_metrics"],
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": ["prompt_patch", "playbook", "policy", "workflow_recipe", "routing_preference", "ui_pattern", "memory_update_proposal"]
+        },
+        "instructions": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 3
+          },
+          "minItems": 1
+        },
+        "memory_policy": {
+          "type": "object",
+          "required": ["allowed", "forbidden", "ttl_days"],
+          "additionalProperties": false,
+          "properties": {
+            "allowed": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "uniqueItems": true
+            },
+            "forbidden": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "uniqueItems": true
+            },
+            "ttl_days": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 365
+            }
+          }
+        },
+        "success_metrics": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        }
+      }
+    },
+    "constraints": {
+      "type": "object",
+      "required": ["max_actions_per_user_per_day", "public_send", "private_data_access", "requires_aegis_scan", "requires_quarantine_on_violation"],
+      "additionalProperties": false,
+      "properties": {
+        "max_actions_per_user_per_day": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 3
+        },
+        "public_send": {
+          "type": "string",
+          "enum": ["false", "charter_bound", "human_approval_required", "quorum_approval_required"]
+        },
+        "private_data_access": {
+          "const": false
+        },
+        "requires_aegis_scan": {
+          "const": true
+        },
+        "requires_quarantine_on_violation": {
+          "const": true
+        }
+      }
+    },
+    "blocked": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "secrets",
+          "raw_private_user_data",
+          "malware",
+          "destructive_commands",
+          "signer_authority",
+          "wallet_authority",
+          "cloud_mutation_authority",
+          "public_posting_authority",
+          "private_scraping",
+          "deceptive_impersonation",
+          "bulk_engagement",
+          "token_hype",
+          "dm_outreach"
+        ]
+      },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "receipts": {
+      "type": "object",
+      "required": ["required", "types"],
+      "additionalProperties": false,
+      "properties": {
+        "required": {
+          "const": true
+        },
+        "types": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "learning",
+              "adoption",
+              "rejection",
+              "social_action",
+              "social_learning",
+              "no_action_decision",
+              "quarantine",
+              "rollback",
+              "verification"
+            ]
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        }
+      }
+    },
+    "adoption": {
+      "type": "object",
+      "required": ["mode", "pilot_window_hours", "rollback_strategy"],
+      "additionalProperties": false,
+      "properties": {
+        "mode": {
+          "type": "string",
+          "enum": ["manual_review", "kubeclaw_pilot", "charter_bound_auto"]
+        },
+        "pilot_window_hours": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 168
+        },
+        "rollback_strategy": {
+          "type": "string",
+          "enum": ["disable_capsule", "pause_worker", "revert_prompt_patch", "human_runbook"]
+        }
+      }
+    },
+    "safety": {
+      "type": "object",
+      "required": ["dreamthrax_lane", "shield_integrity_minimum", "quarantine_triggers"],
+      "additionalProperties": false,
+      "properties": {
+        "dreamthrax_lane": {
+          "type": "string",
+          "enum": ["none", "simulation", "aegis_review", "quarantine_ready"]
+        },
+        "shield_integrity_minimum": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "quarantine_triggers": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        }
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "required": ["repo_paths", "content_hash", "reviewers"],
+      "additionalProperties": false,
+      "properties": {
+        "repo_paths": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        },
+        "content_hash": {
+          "type": "string",
+          "pattern": "^(sha256:)?[a-fA-F0-9]{64}$"
+        },
+        "reviewers": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        }
+      }
+    }
+  }
+}

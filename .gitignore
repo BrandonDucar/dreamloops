@@ -1,0 +1,8 @@
+node_modules/
+.dreamloops-state/
+coverage/
+dist/
+*.log
+.env
+.env.*
+!.env.example

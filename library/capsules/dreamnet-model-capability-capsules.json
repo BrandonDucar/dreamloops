@@ -1,0 +1,257 @@
+{
+  "schema": "dreamnet.model_capability_capsule_registry.v1",
+  "updated_at": "2026-07-05T00:00:00.000Z",
+  "purpose": "Declare model roles, budgets, and safety gates before KubeClaw, DreamLoops, or agents can route work to them.",
+  "capsules": [
+    {
+      "schema": "dreamnet.model_capability_capsule.v1",
+      "capsule_id": "model-capsule:codex-operator-cockpit",
+      "name": "Codex Operator Cockpit",
+      "status": "active",
+      "provider": "codex",
+      "model_id": "codex-desktop",
+      "roles": ["operator", "repo-editor", "verifier"],
+      "best_for": ["workspace-aware implementation", "file edits", "local command verification", "artifact synthesis"],
+      "avoid_for": ["unbounded bulk model comparison", "cheap high-volume draft generation", "wallet or signer execution"],
+      "routing": {
+        "priority": 95,
+        "task_tags": ["orchestration", "repo-editing", "verification", "final-synthesis"],
+        "fallback_order": ["z-ai/glm-5.2", "deepseek/deepseek-v4-pro", "qwen/qwen3-coder-next"]
+      },
+      "budget": {
+        "max_calls_per_run": 1,
+        "max_output_tokens": 2048,
+        "requires_operator_for_paid_burst": true
+      },
+      "safety": {
+        "secrets_allowed": false,
+        "public_actions_allowed": false,
+        "wallet_actions_allowed": false,
+        "requires_verifier": true
+      },
+      "receipts": {
+        "required": true,
+        "types": ["bounded_run", "verifier_review", "memory_promotion"]
+      },
+      "notes": "Codex remains the cockpit because it has local repo context, tool access, and DreamNet operating memory."
+    },
+    {
+      "schema": "dreamnet.model_capability_capsule.v1",
+      "capsule_id": "model-capsule:glm-5-2-long-context-sherlock",
+      "name": "GLM-5.2 Long-Context Sherlock",
+      "status": "pilot",
+      "provider": "openrouter",
+      "model_id": "z-ai/glm-5.2",
+      "roles": ["long-context-reviewer", "sherlockclaw", "security-reader"],
+      "best_for": ["large repo sweeps", "contradiction detection", "spec review", "security and provenance analysis"],
+      "avoid_for": ["private secrets", "live mutation", "final legal or financial advice"],
+      "routing": {
+        "priority": 86,
+        "task_tags": ["long-context", "sherlock", "security-review", "architecture-review"],
+        "fallback_order": ["moonshotai/kimi-k2.7-code", "deepseek/deepseek-v4-pro", "minimax/minimax-m3"]
+      },
+      "budget": {
+        "max_calls_per_run": 1,
+        "max_output_tokens": 512,
+        "requires_operator_for_paid_burst": true
+      },
+      "safety": {
+        "secrets_allowed": false,
+        "public_actions_allowed": false,
+        "wallet_actions_allowed": false,
+        "requires_verifier": true
+      },
+      "receipts": {
+        "required": true,
+        "types": ["availability", "bounded_run", "model_bakeoff", "verifier_review"]
+      }
+    },
+    {
+      "schema": "dreamnet.model_capability_capsule.v1",
+      "capsule_id": "model-capsule:deepseek-v4-pro-code-critic",
+      "name": "DeepSeek V4 Pro Code Critic",
+      "status": "pilot",
+      "provider": "openrouter",
+      "model_id": "deepseek/deepseek-v4-pro",
+      "roles": ["code-critic", "logic-checker", "patch-planner"],
+      "best_for": ["alternate implementation plans", "logic review", "code repair suggestions", "model bakeoff dissent"],
+      "avoid_for": ["secret-bearing prompts", "public posting", "autonomous file mutation without Codex review"],
+      "routing": {
+        "priority": 84,
+        "task_tags": ["coding", "debugging", "reasoning", "bakeoff"],
+        "fallback_order": ["qwen/qwen3-coder-next", "moonshotai/kimi-k2.7-code", "z-ai/glm-5.2"]
+      },
+      "budget": {
+        "max_calls_per_run": 1,
+        "max_output_tokens": 512,
+        "requires_operator_for_paid_burst": true
+      },
+      "safety": {
+        "secrets_allowed": false,
+        "public_actions_allowed": false,
+        "wallet_actions_allowed": false,
+        "requires_verifier": true
+      },
+      "receipts": {
+        "required": true,
+        "types": ["availability", "bounded_run", "model_bakeoff", "verifier_review"]
+      }
+    },
+    {
+      "schema": "dreamnet.model_capability_capsule.v1",
+      "capsule_id": "model-capsule:kimi-k2-7-code-builder",
+      "name": "Kimi K2.7 Code Builder",
+      "status": "pilot",
+      "provider": "openrouter",
+      "model_id": "moonshotai/kimi-k2.7-code",
+      "roles": ["frontend-builder", "design-implementer", "long-task-drafter"],
+      "best_for": ["frontend implementation drafts", "UI copy", "Svelte/Cloudflare planning", "creative coding alternatives"],
+      "avoid_for": ["unreviewed production deploys", "secret-bearing browser automation", "wallet flows"],
+      "routing": {
+        "priority": 82,
+        "task_tags": ["frontend", "creative-build", "svelte", "cloudflare"],
+        "fallback_order": ["moonshotai/kimi-k2.6", "minimax/minimax-m3", "qwen/qwen3-coder-next"]
+      },
+      "budget": {
+        "max_calls_per_run": 1,
+        "max_output_tokens": 512,
+        "requires_operator_for_paid_burst": true
+      },
+      "safety": {
+        "secrets_allowed": false,
+        "public_actions_allowed": false,
+        "wallet_actions_allowed": false,
+        "requires_verifier": true
+      },
+      "receipts": {
+        "required": true,
+        "types": ["availability", "bounded_run", "model_bakeoff", "verifier_review"]
+      }
+    },
+    {
+      "schema": "dreamnet.model_capability_capsule.v1",
+      "capsule_id": "model-capsule:minimax-m3-agentic-generalist",
+      "name": "MiniMax M3 Agentic Generalist",
+      "status": "pilot",
+      "provider": "openrouter",
+      "model_id": "minimax/minimax-m3",
+      "roles": ["agentic-generalist", "product-planner", "workflow-drafter"],
+      "best_for": ["agent workflow drafts", "product operating plans", "multi-step implementation outlines", "model council synthesis"],
+      "avoid_for": ["direct tool execution", "social sends", "sensitive identity data"],
+      "routing": {
+        "priority": 80,
+        "task_tags": ["agentic-workflow", "product", "planning", "synthesis"],
+        "fallback_order": ["z-ai/glm-5.2", "deepseek/deepseek-v4-pro", "qwen/qwen3-coder-next"]
+      },
+      "budget": {
+        "max_calls_per_run": 1,
+        "max_output_tokens": 512,
+        "requires_operator_for_paid_burst": true
+      },
+      "safety": {
+        "secrets_allowed": false,
+        "public_actions_allowed": false,
+        "wallet_actions_allowed": false,
+        "requires_verifier": true
+      },
+      "receipts": {
+        "required": true,
+        "types": ["availability", "bounded_run", "model_bakeoff", "verifier_review"]
+      }
+    },
+    {
+      "schema": "dreamnet.model_capability_capsule.v1",
+      "capsule_id": "model-capsule:qwen3-coder-next-local-cheap-worker",
+      "name": "Qwen3 Coder Next Cheap Worker",
+      "status": "pilot",
+      "provider": "openrouter",
+      "model_id": "qwen/qwen3-coder-next",
+      "roles": ["cheap-code-worker", "first-pass-implementer", "local-fallback-target"],
+      "best_for": ["cheap code draft generation", "small patch plans", "unit-test suggestions", "local model migration target"],
+      "avoid_for": ["final authority decisions", "security-sensitive patches without verifier", "unbounded agent loops"],
+      "routing": {
+        "priority": 78,
+        "task_tags": ["coding", "cheap-draft", "unit-tests", "local-fallback"],
+        "fallback_order": ["qwen/qwen3-coder:free", "deepseek/deepseek-v4-flash", "poolside/laguna-xs-2.1:free"]
+      },
+      "budget": {
+        "max_calls_per_run": 1,
+        "max_output_tokens": 512,
+        "requires_operator_for_paid_burst": true
+      },
+      "safety": {
+        "secrets_allowed": false,
+        "public_actions_allowed": false,
+        "wallet_actions_allowed": false,
+        "requires_verifier": true
+      },
+      "receipts": {
+        "required": true,
+        "types": ["availability", "bounded_run", "model_bakeoff", "verifier_review"]
+      }
+    },
+    {
+      "schema": "dreamnet.model_capability_capsule.v1",
+      "capsule_id": "model-capsule:nvidia-nemotron-nano-ops-faculty",
+      "name": "NVIDIA Nemotron Nano Ops Faculty",
+      "status": "active",
+      "provider": "nvidia-nim",
+      "model_id": "nvidia/llama-3.1-nemotron-nano-8b-v1",
+      "roles": ["ops-faculty", "rubric-grader", "high-volume-summarizer"],
+      "best_for": ["bounded operations summaries", "University rubric drafts", "social draft critique", "cheap active-use smoke checks"],
+      "avoid_for": ["deep code mutation", "private secrets", "unbounded 34k-agent loops"],
+      "routing": {
+        "priority": 83,
+        "task_tags": ["ops", "grading", "summary", "active-smoke"],
+        "fallback_order": ["z-ai/glm-5.2", "minimax/minimax-m3", "poolside/laguna-xs-2.1:free"]
+      },
+      "budget": {
+        "max_calls_per_run": 1,
+        "max_output_tokens": 512,
+        "requires_operator_for_paid_burst": true
+      },
+      "safety": {
+        "secrets_allowed": false,
+        "public_actions_allowed": false,
+        "wallet_actions_allowed": false,
+        "requires_verifier": true
+      },
+      "receipts": {
+        "required": true,
+        "types": ["availability", "bounded_run", "verifier_review"]
+      }
+    },
+    {
+      "schema": "dreamnet.model_capability_capsule.v1",
+      "capsule_id": "model-capsule:longcat-2-watchlist-agent-coder",
+      "name": "LongCat 2.0 Watchlist Agent Coder",
+      "status": "watchlist",
+      "provider": "unknown",
+      "model_id": "longcat/longcat-2.0",
+      "roles": ["watchlist-agent-coder", "mit-license-candidate"],
+      "best_for": ["future agentic coding bakeoff", "license-friendly lab comparison"],
+      "avoid_for": ["production routing before callable provider exists", "claims of availability before verification"],
+      "routing": {
+        "priority": 40,
+        "task_tags": ["watchlist", "agentic-coding", "license-review"],
+        "fallback_order": ["qwen/qwen3-coder-next", "deepseek/deepseek-v4-pro"]
+      },
+      "budget": {
+        "max_calls_per_run": 0,
+        "max_output_tokens": 512,
+        "requires_operator_for_paid_burst": true
+      },
+      "safety": {
+        "secrets_allowed": false,
+        "public_actions_allowed": false,
+        "wallet_actions_allowed": false,
+        "requires_verifier": true
+      },
+      "receipts": {
+        "required": true,
+        "types": ["availability", "model_bakeoff", "verifier_review"]
+      },
+      "notes": "Not visible in the OpenRouter catalog during the 2026-07-05 scan; keep as watchlist until a direct or marketplace route is verified."
+    }
+  ]
+}

@@ -1,0 +1,118 @@
+{
+  "schema": "dreamnet.dreamloop.v1",
+  "loop_id": "recovery-and-rollback-v1",
+  "title": "Recovery and Rollback",
+  "version": "1.0.0",
+  "status": "rehearsed",
+  "owner": "persistent-agent-base-v1",
+  "stewards": [
+    "agent_operator"
+  ],
+  "permission_tier": "local_draft_write",
+  "trigger": "failed heartbeat, corrupt state, or operator request",
+  "inputs": [
+    "agent identity",
+    "current objective",
+    "current time",
+    "operator policy"
+  ],
+  "context_sources": [
+    "latest healthy checkpoint",
+    "failure receipt",
+    "rollback policy"
+  ],
+  "allowed_actions": [
+    "checkpoint.local.read",
+    "receipt.local.write",
+    "runtime.health.read",
+    "state.local.write"
+  ],
+  "blocked_actions": [
+    "cloud.mutate",
+    "component.install",
+    "connector.unbounded.write",
+    "deployment.production.write",
+    "package.install",
+    "public.publish",
+    "secret.value.read",
+    "self.modify.live",
+    "signer.change",
+    "wallet.sign"
+  ],
+  "checks": [
+    "permissions granted",
+    "resource ceilings intact",
+    "receipt produced",
+    "restore target verified",
+    "failed state retained for diagnosis"
+  ],
+  "evidence_outputs": [
+    "recovery-and-rollback evidence"
+  ],
+  "receipt_outputs": [
+    "recovery-and-rollback receipt"
+  ],
+  "knowledge_state_outputs": [
+    "recovery-and-rollback knowledge-state update"
+  ],
+  "execution_trace_outputs": [
+    "recovery-and-rollback bounded execution trace"
+  ],
+  "memory_routes": [
+    "local episodic memory",
+    "promote only verified durable facts"
+  ],
+  "cooldown": "host policy",
+  "failure_modes": [
+    "permission denied",
+    "unregistered handler",
+    "timeout",
+    "invalid state",
+    "dependency unavailable"
+  ],
+  "promotion_path": "rehearsed -> active_local -> live_guarded",
+  "last_reviewed": "2026-07-14",
+  "limits": {
+    "max_wall_time_ms": 120000,
+    "max_steps": 6,
+    "max_retries_per_step": 1
+  },
+  "steps": [
+    {
+      "id": "inspect",
+      "handler": "runtime.health.read",
+      "permission": "runtime.health.read",
+      "with": {},
+      "retry": {
+        "max_attempts": 2
+      }
+    },
+    {
+      "id": "read-checkpoint",
+      "handler": "checkpoint.local.read",
+      "permission": "checkpoint.local.read",
+      "with": {},
+      "retry": {
+        "max_attempts": 2
+      }
+    },
+    {
+      "id": "restore-state",
+      "handler": "state.local.write",
+      "permission": "state.local.write",
+      "with": {},
+      "retry": {
+        "max_attempts": 2
+      }
+    },
+    {
+      "id": "record",
+      "handler": "receipt.local.write",
+      "permission": "receipt.local.write",
+      "with": {},
+      "retry": {
+        "max_attempts": 2
+      }
+    }
+  ]
+}

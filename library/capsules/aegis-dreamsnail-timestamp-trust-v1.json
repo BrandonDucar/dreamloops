@@ -1,0 +1,142 @@
+{
+  "schema": "dreamnet.synergy_capsule.v1",
+  "capsule_id": "capsule:aegis.dreamsnail.timestamp-trust.v1",
+  "name": "Aegis DreamSnail Timestamp Trust",
+  "version": "v1.0.0",
+  "capsule_type": "safety",
+  "status": "draft",
+  "created_at": "2026-06-30T20:25:00Z",
+  "purpose": "Harden DreamNet receipt timestamps by combining Aegis gatekeeping with DreamSnail-style persistent proof movement and replay-safe verification.",
+  "source": {
+    "created_by": "Codex",
+    "derived_from": [
+      "docs/architecture/shielded-cells-synergy-capsules.md",
+      "docs/architecture/synergy-capsule-atlas.md",
+      "server/snail/DreamSnail.ts",
+      "server/trust/hash.ts",
+      "packages/chain-receipt-core/logic/receiptGenerator.ts",
+      "schemas/dreamnet-proof-receipt.schema.json"
+    ],
+    "learning_receipts": [
+      "artifacts/ops/social-autonomy/synergy-capsule-schema-and-ahap-pilot-receipt-2026-06-30T20-12Z.md"
+    ]
+  },
+  "target": {
+    "eligible_cells": [
+      "ProofDrop",
+      "DreamSnail",
+      "Aegis",
+      "ReceiptLedger",
+      "UniversityRegistrar"
+    ],
+    "excluded_cells": [],
+    "required_badges": [
+      "SEC-101",
+      "PROOF-101"
+    ]
+  },
+  "payload": {
+    "kind": "policy",
+    "instructions": [
+      "Treat client timestamps as claims, not authority.",
+      "Bind every receipt to server_received_at, canonical content hash, source identity, and storage location.",
+      "Reject or quarantine receipts whose client timestamp drift exceeds the active policy window.",
+      "Require monotonic ordering for repeat submissions from the same identity when the receipt class expects sequence.",
+      "Use idempotency keys to prevent replayed submissions from creating conflicting proof records.",
+      "Write verification receipts whenever a timestamp is accepted, rejected, or quarantined.",
+      "Expose proof status as verified, local_only, pending_anchor, rejected, or quarantined rather than a vague success state."
+    ],
+    "memory_policy": {
+      "allowed": [
+        "receipt_id",
+        "content_hash",
+        "server_received_at",
+        "client_claimed_at",
+        "clock_drift_ms",
+        "identity_hash",
+        "storage_pointer",
+        "verification_status",
+        "quarantine_reason"
+      ],
+      "forbidden": [
+        "raw_private_user_data",
+        "secrets",
+        "wallet_private_keys",
+        "session_tokens",
+        "unredacted_api_keys"
+      ],
+      "ttl_days": 365
+    },
+    "success_metrics": [
+      "receipt_hash_mismatch_rate_decreases",
+      "timestamp_drift_detected",
+      "replay_attempts_idempotently_handled",
+      "verification_route_returns_clear_status",
+      "quarantine_receipts_written"
+    ]
+  },
+  "constraints": {
+    "max_actions_per_user_per_day": 0,
+    "public_send": "false",
+    "private_data_access": false,
+    "requires_aegis_scan": true,
+    "requires_quarantine_on_violation": true
+  },
+  "blocked": [
+    "secrets",
+    "raw_private_user_data",
+    "malware",
+    "destructive_commands",
+    "signer_authority",
+    "wallet_authority",
+    "cloud_mutation_authority",
+    "public_posting_authority",
+    "private_scraping",
+    "deceptive_impersonation",
+    "bulk_engagement",
+    "token_hype",
+    "dm_outreach"
+  ],
+  "receipts": {
+    "required": true,
+    "types": [
+      "learning",
+      "adoption",
+      "rejection",
+      "quarantine",
+      "rollback",
+      "verification"
+    ]
+  },
+  "adoption": {
+    "mode": "manual_review",
+    "pilot_window_hours": 72,
+    "rollback_strategy": "disable_capsule"
+  },
+  "safety": {
+    "dreamthrax_lane": "aegis_review",
+    "shield_integrity_minimum": 0.95,
+    "quarantine_triggers": [
+      "receipt_hash_mismatch",
+      "timestamp_drift_exceeded",
+      "replay_collision",
+      "missing_server_received_at",
+      "missing_identity_binding",
+      "verification_route_failed",
+      "private_data_boundary_failure"
+    ]
+  },
+  "provenance": {
+    "repo_paths": [
+      "schemas/dreamnet-synergy-capsule.schema.json",
+      "docs/architecture/synergy-capsule-atlas.md",
+      "artifacts/ops/social-autonomy/capsules/aegis-dreamsnail-timestamp-trust-v1.json"
+    ],
+    "content_hash": "sha256:58d1a0cd3c8d54f111265f78da8944845c3da305d9f26af1a8814ff1307c020a",
+    "reviewers": [
+      "Aegis",
+      "DreamSnail",
+      "SherlockClaw"
+    ]
+  }
+}
