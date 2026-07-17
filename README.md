@@ -1,10 +1,32 @@
 # DreamLoops
 
-Portable, bounded operating loops and capability Capsules for persistent AI agents.
+## Governed operating loops and portable capability Capsules for persistent AI agents
 
-DreamLoops turns recurring agent behavior into versioned, reviewable contracts. Capsules carry identity, capabilities, policies, resource ceilings, lineage, and rollback information. DreamLoops define when work starts, what context may be loaded, which typed handlers may run, what is forbidden, and which evidence and receipts must be produced.
+DreamLoops is an open specification, runtime, and starter ecosystem for transferring agent capability without surrendering identity, human authority, provenance, or rollback.
 
-The project is useful without DreamNet or Warper Keeper. It contains a dependency-free runtime, a CLI, a complete persistent-agent starter kit, a broad human-readable Loop library, optional adapters, and experimental work promoted from Grok Labs.
+The architecture has four connected primitives:
+
+| Primitive | Purpose |
+| --- | --- |
+| **DreamLoops** | Versioned, bounded operating contracts for repeatable agent work |
+| **Capsules** | Portable, versioned, inheritable packages of governed capability |
+| **Receipts** | Hashable evidence connecting claimed work to an execution, actor, checks, approvals, and result |
+| **Lineage** | Provenance for capability ancestry, adoption, mutation, descendants, rollback, and quarantine |
+
+> **DreamLoops govern behavior. Capsules carry capability. Receipts prove execution.**
+
+DreamLoops define when work starts, what context may be loaded, which typed handlers may run, what is forbidden, what approvals are required, and which evidence and receipts must be produced. Capsules carry identity or persona overlays, capabilities, knowledge, policies, memory references, resource ceilings, evaluation criteria, lineage, and rollback information.
+
+The project is useful without DreamNet or Warper Keeper. It contains a dependency-free runtime, a CLI, a complete persistent-agent starter kit, a broad human-readable DreamLoop library, optional adapters, and experimental work promoted from Grok Labs.
+
+## Start here
+
+- [What Capsules are](CAPSULES.md)
+- [DreamLoop specification](specs/DREAMLOOP_SPEC.md)
+- [Capsule specification](specs/CAPSULE_SPEC.md)
+- [DreamLoops and Capsules origin paper](docs/origins/dreamloops-and-capsules-origin-paper.md)
+- [Complete generated catalog](CATALOG.md)
+- [ZOL integration example](examples/zol/)
 
 ## Install
 
@@ -23,7 +45,7 @@ npx dreamloops validate-all
 npx dreamloops list
 ```
 
-## Core Model
+## Core model
 
 ```text
 Base Capsule
@@ -33,11 +55,41 @@ Base Capsule
   -> bounded DreamLoop runtime
   -> durable local state
   -> evidence and receipts
+  -> lineage and governed improvement
 ```
 
 A Capsule is inert data. A DreamLoop manifest is inert data. Neither may execute Markdown, evaluate manifest text, install software, reveal secrets, publish content, spend funds, or mutate production merely because it was loaded. Application code must register each typed handler and grant each permission explicitly.
 
-## Repository Map
+## Why Capsules
+
+Agent intelligence is usually scattered across prompts, skills, workflow code, memory databases, tool permissions, policies, deployment configuration, and logs.
+
+Without Capsules, builders transfer capability by copying those pieces manually, cloning an entire agent, retraining a model, or rebuilding the system in a new environment.
+
+Capsules make developed capability one governed unit that can be:
+
+- validated and hashed
+- versioned and compared
+- installed into an existing agent without replacing its identity
+- evaluated before activation
+- activated, disabled, retired, or rolled back
+- linked to parents, descendants, and adoption receipts
+- improved through governed mutation
+- quarantined when unsafe
+
+See [CAPSULES.md](CAPSULES.md) for the full overview.
+
+## Public origin record
+
+DreamNet publicly documented the combined DreamLoops and Capsules architecture through dated design notes, specifications, schemas, examples, and runtime code.
+
+Version `0.1.0`, published July 14, 2026, included Capsule and DreamLoop specifications, canonical hashing, Capsule composition, durable state, bounded execution, receipts, seven generalized persistent-agent Capsules, eighteen stable DreamLoops, and the public ZOL integration profile.
+
+The [origin paper](docs/origins/dreamloops-and-capsules-origin-paper.md) records the architecture and chronology. It states the supported authorship claim precisely:
+
+> By July 14, 2026, DreamNet had publicly specified and implemented DreamLoops and Capsules as a unified system for portable, bounded, inheritable, receipt-backed agent intelligence.
+
+## Repository map
 
 | Path | Purpose |
 | --- | --- |
@@ -51,7 +103,7 @@ A Capsule is inert data. A DreamLoop manifest is inert data. Neither may execute
 | `library/capsules/` | Existing reusable Capsule examples |
 | `labs/grok/` | Experimental Capsules, Loops, Fish Swarm, Genealogist, DNA, and Persistent Dream work |
 | `examples/zol/` | ZOL profile overlay and integration guide |
-| `docs/origins/` | Public design history and architecture papers |
+| `docs/origins/` | Public design history, architecture papers, and origin record |
 
 See [CATALOG.md](CATALOG.md) for the complete generated inventory.
 
