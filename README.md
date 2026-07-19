@@ -133,6 +133,20 @@ The starter kit covers:
 
 Grok Labs is a public innovation lane. Work may graduate from `labs/grok/` into the stable specification only through review, tests, provenance, and a release.
 
+## Public Adoption
+
+DreamLoops is already being exercised outside the DreamNet monorepo.
+
+[ZOL](https://github.com/bettercallzaal/zol), an independently operated Farcaster agent, has publicly merged:
+
+- a [persistent-agent DreamLoops graft with green tests](https://github.com/bettercallzaal/zol/pull/19),
+- a [Bonfire memory adapter for DreamLoops state](https://github.com/bettercallzaal/zol/pull/16),
+- a [weekly curator loop](https://github.com/bettercallzaal/zol/pull/21),
+- an [artist spotlight loop](https://github.com/bettercallzaal/zol/pull/22), and
+- [dry-run registration for those recurring loops](https://github.com/bettercallzaal/zol/pull/23).
+
+ZOL remains a separate project under its own operator and review process. These links are public implementation evidence, not a claim that DreamNet controls the project.
+
 ## Security
 
 - Unknown handlers fail closed.
