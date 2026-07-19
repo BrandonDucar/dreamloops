@@ -1,5 +1,8 @@
 # DreamLoops
 
+[![CI](https://github.com/BrandonDucar/dreamloops/actions/workflows/ci.yml/badge.svg)](https://github.com/BrandonDucar/dreamloops/actions/workflows/ci.yml) [![Release](https://img.shields.io/github/v/release/BrandonDucar/dreamloops)](https://github.com/BrandonDucar/dreamloops/releases/latest) [![License](https://img.shields.io/github/license/BrandonDucar/dreamloops)](LICENSE)
+
+
 ## Governed operating loops and portable capability Capsules for persistent AI agents
 
 DreamLoops is an open specification, runtime, and starter ecosystem for transferring agent capability without surrendering identity, human authority, provenance, or rollback.
