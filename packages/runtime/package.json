@@ -1,6 +1,6 @@
 {
   "name": "@dreamloops/runtime",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "type": "module",
   "description": "Dependency-free Capsule validation, composition, durable state, and bounded DreamLoop execution",
   "exports": "./src/index.js",

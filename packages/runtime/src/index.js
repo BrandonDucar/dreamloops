@@ -8,5 +8,6 @@ export {
 } from "./contracts.js";
 export { validateCapsule, validateDreamLoop } from "./validate.js";
 export { DreamLoopRunner } from "./runner.js";
+export { DEFAULT_PERMISSION_TIERS } from "./permission-policy.js";
 export { composeCapsules } from "./compose.js";
 export { FileStateStore, MemoryStateStore } from "./state-store.js";
