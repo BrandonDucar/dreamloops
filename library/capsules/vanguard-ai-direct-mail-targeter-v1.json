@@ -1,0 +1,63 @@
+{
+  "$schema": "https://dreamnet.ink/schemas/dreamnet-clawcapsule.schema.json",
+  "schema": "dreamnet.clawcapsule.v1",
+  "id": "vanguard-ai-direct-mail-targeter-v1",
+  "title": "Vanguard 54 AI Direct-Mail & Satellite Targeter Capsule",
+  "version": "1.0.0",
+  "author": "Vanguard 54 Corps",
+  "description": "Governed capability capsule for 24/7 autonomous property GIS scanning, aerial satellite fetching, AI before/after postcard transformation rendering, and lead list x402 monetization.",
+  "runtime": {
+    "kind": "docker",
+    "image": "ghcr.io/brandonducar/dreamnet-vanguard-targeter:v1.0.0",
+    "containerPort": 3205
+  },
+  "permissions": {
+    "tier": "local_draft_write",
+    "allowedSurfaces": [
+      "/api/vanguard/postcards/target",
+      "/api/vanguard/postcards/generate-concept",
+      "/api/vanguard/postcards/queue-dispatch",
+      "/api/vanguard/leads/monetize"
+    ],
+    "blockedActions": [
+      "unapproved_print_dispatch",
+      "wallet_signing_without_approval",
+      "non_public_data_exposure"
+    ]
+  },
+  "university": {
+    "required_badges": [
+      "POWK-Vanguard-Publishing-v1",
+      "POWK-GIS-Data-Mining-v1",
+      "POWK-AI-Inpainting-v1"
+    ]
+  },
+  "monetization": {
+    "leadPackPricingUsd": 0.05,
+    "rail": "x402",
+    "network": "Base",
+    "settlementAddress": "0xce48253469e80335589807ccb6082068ba0d9eba",
+    "products": [
+      {
+        "id": "lead-data-single",
+        "name": "Single Verified Property Lead Record",
+        "priceUsd": 0.05,
+        "description": "Raw GIS parcel data + property address + value + missing amenity tag + satellite aerial coordinates."
+      },
+      {
+        "id": "lead-data-pack-100",
+        "name": "100 Verified County Target Lead Pack",
+        "priceUsd": 4.50,
+        "description": "100 high-equity property leads filtered by vertical (Pools, Docks, Screens, Pickleball, Solar)."
+      },
+      {
+        "id": "monthly-county-data-feed",
+        "name": "Monthly County Lead Data API Stream",
+        "priceUsd": 497.00,
+        "description": "Real-time stream of all newly identified high-equity property targets across target county."
+      }
+    ]
+  },
+  "dreamloop_ref": "docs/dreamloops/vanguard-property-satellite-scout.dreamloop.md",
+  "createdAt": "2026-07-23T00:00:00Z"
+}

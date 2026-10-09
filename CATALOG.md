@@ -67,11 +67,12 @@ This deterministic catalog distinguishes executable stable contracts from preser
 - [`library/dreamnet/templates/resonance-trial.dreamloop.md`](library/dreamnet/templates/resonance-trial.dreamloop.md)
 - [`library/dreamnet/templates/spark-agent.dreamloop.md`](library/dreamnet/templates/spark-agent.dreamloop.md)
 
-## DreamNet Capsule Library (3)
+## DreamNet Capsule Library (4)
 
 - [`library/capsules/aegis-dreamsnail-timestamp-trust-v1.json`](library/capsules/aegis-dreamsnail-timestamp-trust-v1.json)
 - [`library/capsules/ahap-relationship-memory-v1-neyclaw.json`](library/capsules/ahap-relationship-memory-v1-neyclaw.json)
 - [`library/capsules/dreamnet-model-capability-capsules.json`](library/capsules/dreamnet-model-capability-capsules.json)
+- [`library/capsules/vanguard-ai-direct-mail-targeter-v1.json`](library/capsules/vanguard-ai-direct-mail-targeter-v1.json)
 
 ## Grok Labs Capsules (8)
 
