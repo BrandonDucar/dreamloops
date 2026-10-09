@@ -24,6 +24,12 @@ The project is useful without DreamNet or Warper Keeper. It contains a dependenc
 
 ## Start here
 
+[Project overview](https://brandonducar.github.io/BrandonDucar/projects/dreamloops/)
+
+External integration evidence: ZOL merged [persistent-agent support](https://github.com/bettercallzaal/zol/pull/19)
+and a [Bonfire adapter](https://github.com/bettercallzaal/zol/pull/16).
+These establish merged contributions, not current deployment or endorsement.
+
 - [What Capsules are](CAPSULES.md)
 - [DreamLoop specification](specs/DREAMLOOP_SPEC.md)
 - [Capsule specification](specs/CAPSULE_SPEC.md)
